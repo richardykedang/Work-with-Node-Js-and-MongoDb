@@ -159,12 +159,30 @@ exports.updateTour = async (req, res) => {
     
 };
 
-exports.deleteTour = (req, res) => {
-    const id = req.params.id * 1;
-    const tour = tours.find(el => el.id === id);
+// exports.deleteTour = (req, res) => {
+//     const id = req.params.id * 1;
+//     const tour = tours.find(el => el.id === id);
 
-    res.status(204).json({
-        status : 'succes',
-        data : null
-    })
+//     res.status(204).json({
+//         status : 'succes',
+//         data : null
+//     })
+// };
+
+exports.deleteTour = async (req, res) => {
+    try {
+
+        await Tour.findByIdAndDelete(req.params.id)
+
+            res.status(204).json({
+                status : 'succes',
+                data : null
+            })
+    } catch (err) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'INVALID ID'
+        })
+    }
+
 };
