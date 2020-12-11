@@ -21,14 +21,34 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-si
 //     }
 //     next();
 // };
-exports.getAlltours = (req, res) => {
-    res.status(200).json({
+// exports.getAlltours = (req, res) => {
+//     res.status(200).json({
+//         message : 'success',
+//         result : tours.length,
+//         data : {
+//             tours
+//         }
+//     }) 
+// };
+
+exports.getAlltours = async (req, res) => {
+    try{
+        const tours = await Tour.find();
+
+        res.status(200).json({
         message : 'success',
         result : tours.length,
         data : {
             tours
-        }
-    }) 
+            }
+        }) 
+    } catch (err) {
+        res.status(400).json({
+            status: "failed",
+            message: err
+        })
+    }
+    
 };
 
 exports.getTour = (req, res) => {
