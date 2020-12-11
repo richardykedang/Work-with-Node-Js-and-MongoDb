@@ -16,17 +16,19 @@ mongoose.connect(DB,{
     useCreateIndex: true
 }).then(() => console.log("DB connection successful!"));
 
-const Testtour = new Tour({
-    name: "The Forest Hiker",
-    rating: 4.7,
-    price: 497
-});
+//Create new document collection
+// const Testtour = new Tour({
+//     name: "The Forest Hiker",
+//     rating: 4.7,
+//     price: 497
+// });
 
-Testtour
-    .save()
-    .then(doc => console.log(doc))
-    .catch(err => console.log("ERROR : ", err))
+// Testtour
+//     .save()
+//     .then(doc => console.log(doc))
+//     .catch(err => console.log("ERROR : ", err))
 
+//server    
 const PORT = process.env.PORT||3000;
 app.listen(3000, ()=>{
     console.log(`App running on port : ${PORT}`)
