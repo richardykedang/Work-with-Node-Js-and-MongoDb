@@ -33,8 +33,20 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-si
 
 exports.getAlltours = async (req, res) => {
     try{
-        const tours = await Tour.find();
+        //BUILD QUERY
+        console.log(req.query);
+        const queryObj = {...req.query};
+        const excludeFields = ['page','sort','limit','fields'];
+        //loop
+        excludeFields.forEach(el => delete queryObj[el]);
+        console.log(req.query, queryObj);
 
+        const query = Tour.find(queryObj);
+
+        //EXECUTE QUERY
+        const tour = await query;
+
+        //SEND RESPONSE
         res.status(200).json({
         message : 'success',
         result : tours.length,

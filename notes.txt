@@ -30,4 +30,6 @@
  *create new check id function and parse into mindleware
  *call that function into post body
 
- -.instal the enviroment = npm install dotenv --save
+-.instal the enviroment = npm install dotenv --save
+-.import data = node dev-data/data/import-dev-data.js --import
+-.delete data = node dev-data/data/import-dev-data.js --delete

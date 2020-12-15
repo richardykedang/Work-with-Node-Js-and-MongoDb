@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
-const Tour = require('./Model/tourModel');
+dotenv.config({ path:'./config.env'});
+//const Tour = require('./Model/tourModel');
 const os = require('os');
 const osType = os.type();
 
 console.log(osType);
 
-dotenv.config({ path:'./config.env'});
+
 
 const DB = process.env.DATABASE.replace('<PASSWORD>',process.env.DATABASE_PASSWORD);
 mongoose.connect(DB,{
