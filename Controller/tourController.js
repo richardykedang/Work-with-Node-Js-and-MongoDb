@@ -1,5 +1,6 @@
 const { match } = require('assert');
 const fs = require('fs');
+const { Query } = require('mongoose');
 const Tour = require('../Model/tourModel');
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`));
 
@@ -60,6 +61,13 @@ exports.getAlltours = async (req, res) => {
             query = query.sort('-createdAt');
         }
 
+        //3) Field limiting by select
+        if(req.query.fields) {
+            const fields = req.query.fields.split(',').join(' ');
+            query = query.select(fields);
+        } else {
+            query = query.select('-__v');
+        }
         //EXECUTE QUERY
         const tours = await query;
 
