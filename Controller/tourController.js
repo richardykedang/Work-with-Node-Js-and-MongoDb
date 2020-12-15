@@ -1,3 +1,4 @@
+const { match } = require('assert');
 const fs = require('fs');
 const Tour = require('../Model/tourModel');
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`));
@@ -34,6 +35,7 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/../dev-data/data/tours-si
 exports.getAlltours = async (req, res) => {
     try{
         //BUILD QUERY
+        // 1) filtering
         console.log(req.query);
         const queryObj = {...req.query};
         const excludeFields = ['page','sort','limit','fields'];
@@ -41,10 +43,16 @@ exports.getAlltours = async (req, res) => {
         excludeFields.forEach(el => delete queryObj[el]);
         console.log(req.query, queryObj);
 
-        const query = Tour.find(queryObj);
+        //2)Advanced Filtering
+        //{difficulty: 'easy', duration: {$gte: 5}}
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        console.log(JSON.parse(queryStr));
+        //const query = Tour.find(queryObj);
+        const query = Tour.find(JSON.parse(queryStr));
 
         //EXECUTE QUERY
-        const tour = await query;
+        const tours = await query;
 
         //SEND RESPONSE
         res.status(200).json({
